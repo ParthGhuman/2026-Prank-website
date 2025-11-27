@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Future Scanner</title>
+
+<style>
+    body {
+        background: black;
+        color: cyan;
+        text-align: center;
+        font-family: Arial, sans-serif;
+    }
+
+    .hidden { display: none; }
+
+    button {
+        background: cyan;
+        border: none;
+        padding: 15px 30px;
+        border-radius: 10px;
+        font-size: 18px;
+        margin-top: 20px;
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+    video {
+        width: 90%;
+        max-width: 420px;
+        display: block;
+        margin: 20px auto;
+        border-radius: 15px;
+        box-shadow: 0 0 25px cyan;
+    }
+
+    h2 {
+        margin-top: 20px;
+        font-size: 26px;
+        color: cyan;
+    }
+</style>
+
+</head>
+<body>
+
+<!-- FIRST SCREEN -->
+<h1 id="mainText">Want to see your future?<br>Put your hand on the screen for scanning…</h1>
+
+<button id="startBtn">Proceed Further</button>
+
+<!-- HAND SCAN VIDEO -->
+<video id="handScan" class="hidden" src="handScan.mp4"></video>
+
+<!-- TEXT BEFORE FINAL VIDEO -->
+<h2 id="readyText" class="hidden">Are you ready?</h2>
+
+<!-- FINAL VIDEO -->
+<video id="finalVid" class="hidden" src="final.mp4"></video>
+
+<script>
+document.getElementById("startBtn").onclick = () => {
+    // hide intro
+    document.getElementById("mainText").classList.add("hidden");
+    document.getElementById("startBtn").classList.add("hidden");
+
+    // show hand scan video
+    let handScan = document.getElementById("handScan");
+    handScan.classList.remove("hidden");
+    handScan.play();
+
+    // After hand scan ends → show "Are you ready?" → then final video
+    handScan.onended = () => {
+        handScan.classList.add("hidden");  
+
+        // Show "Are you ready?"
+        let readyText = document.getElementById("readyText");
+        readyText.classList.remove("hidden");
+
+        // Wait 2 seconds then show final video
+        setTimeout(() => {
+            readyText.classList.add("hidden");
+
+            let finalVid = document.getElementById("finalVid");
+            finalVid.classList.remove("hidden");
+            finalVid.play();
+        }, 2000);
+    };
+};
+</script>
+
+</body>
+</html>
