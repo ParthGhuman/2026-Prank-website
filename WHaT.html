@@ -26,9 +26,10 @@
         font-weight: bold;
     }
 
-    video {
+    iframe {
         width: 90%;
         max-width: 450px;
+        height: 253px; /* 16:9 ratio for 450px width */
         display: block;
         margin: 20px auto;
         border-radius: 15px;
@@ -51,19 +52,19 @@
 <button id="startBtn">Proceed Further</button>
 
 <!-- HAND SCAN VIDEO -->
-<video id="handScan" class="hidden" playsinline>
-  <source src="handScan.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
+<div id="handScan" class="hidden">
+  <iframe id="handScanFrame" src="https://www.youtube.com/embed/1unGW4gVcpE?autoplay=1&mute=1" 
+          frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+</div>
 
 <!-- TEXT BEFORE FINAL VIDEO -->
 <h2 id="readyText" class="hidden">Are you ready?</h2>
 
 <!-- FINAL VIDEO -->
-<video id="finalVid" class="hidden" playsinline>
-  <source src="final.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
+<div id="finalVid" class="hidden">
+  <iframe id="finalFrame" src="https://www.youtube.com/embed/GkbPAbKqOro?autoplay=1&mute=1" 
+          frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+</div>
 
 <script>
 document.getElementById("startBtn").onclick = () => {
@@ -74,11 +75,9 @@ document.getElementById("startBtn").onclick = () => {
     // show hand scan video
     let handScan = document.getElementById("handScan");
     handScan.classList.remove("hidden");
-    handScan.load();  // Ensure video loads properly
-    handScan.play();
 
-    // After hand scan ends → show "Are you ready?" → then final video
-    handScan.onended = () => {
+    // Wait the duration of the hand scan video (approx 5 seconds)
+    setTimeout(() => {
         handScan.classList.add("hidden");  
 
         // Show "Are you ready?"
@@ -91,13 +90,11 @@ document.getElementById("startBtn").onclick = () => {
 
             let finalVid = document.getElementById("finalVid");
             finalVid.classList.remove("hidden");
-            finalVid.load();  // Ensure final video loads properly
-            finalVid.play();
         }, 2000);
-    };
+
+    }, 5000); // hand scan duration in ms
 };
 </script>
 
 </body>
 </html>
-
