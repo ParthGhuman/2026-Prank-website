@@ -28,7 +28,7 @@
 
     video {
         width: 90%;
-        max-width: 420px;
+        max-width: 450px;
         display: block;
         margin: 20px auto;
         border-radius: 15px;
@@ -51,13 +51,19 @@
 <button id="startBtn">Proceed Further</button>
 
 <!-- HAND SCAN VIDEO -->
-<video id="handScan" class="hidden" src="handScan.mp4"></video>
+<video id="handScan" class="hidden" playsinline>
+  <source src="handScan.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
 
 <!-- TEXT BEFORE FINAL VIDEO -->
 <h2 id="readyText" class="hidden">Are you ready?</h2>
 
 <!-- FINAL VIDEO -->
-<video id="finalVid" class="hidden" src="final.mp4"></video>
+<video id="finalVid" class="hidden" playsinline>
+  <source src="final.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
 
 <script>
 document.getElementById("startBtn").onclick = () => {
@@ -68,6 +74,7 @@ document.getElementById("startBtn").onclick = () => {
     // show hand scan video
     let handScan = document.getElementById("handScan");
     handScan.classList.remove("hidden");
+    handScan.load();  // Ensure video loads properly
     handScan.play();
 
     // After hand scan ends → show "Are you ready?" → then final video
@@ -84,6 +91,7 @@ document.getElementById("startBtn").onclick = () => {
 
             let finalVid = document.getElementById("finalVid");
             finalVid.classList.remove("hidden");
+            finalVid.load();  // Ensure final video loads properly
             finalVid.play();
         }, 2000);
     };
@@ -92,3 +100,4 @@ document.getElementById("startBtn").onclick = () => {
 
 </body>
 </html>
+
